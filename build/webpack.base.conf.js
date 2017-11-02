@@ -18,6 +18,7 @@ module.exports = {
   entry: {
     app: './src/main.js'
   },
+  devtool:"source-map",
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -82,9 +83,12 @@ module.exports = {
         test: /\.scss$/,
         use: extractSass.extract({
           use: [{
-            loader: "css-loader"
+            loader: "css-loader",options:{
+              sourceMap:true
+            }
           }, {
-            loader: "sass-loader"
+            loader: "sass-loader",options:{
+              sourceMap:true
           }],
           // use style-loader in development
           fallback: "style-loader"

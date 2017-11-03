@@ -8,6 +8,7 @@ body{
   -webkit-font-smoothing: antialiased;
   font-size: 0.6rem;
   min-width:$container-width;
+  background-color: $bg-color-base;
 }
 .container{
   width: $container-width;
@@ -29,5 +30,22 @@ header,ul,.el-row{
   }
 }
 .href-abs{
-  @extend %absolute
+  @extend %absolute;
+  z-index: 10;
+}
+@media (-webkit-min-device-pixel-ratio:1.5),(min-device-pixel-ratio:1.5){
+  .boder-1px{
+    &::after{
+      -webkit-transform:scaleY(0.7);
+      transform:scaleY(0.7);
+    }
+  }
+}
+@media (-webkit-min-device-pixel-ratio:2),(min-device-pixel-ratio:2){
+  .boder-1px{
+    &::after{
+      -webkit-transform:scaleY(0.5);
+      transform:scaleY(0.5);
+    }
+  }
 }

@@ -1,17 +1,20 @@
 <template>
   <div class="news-item clearfix">
     <div class="news-media">
+      <router-link :to="{ name: 'detail', params: { newsId: newsId} }" class="href-abs"></router-link>
       <div class="top-padding"></div>
       <div class="img-box">
         <img src="http://image.woshipm.com/wp-files/2017/11/cxvc.jpg!/both/215x140">
       </div>
     </div>
     <div class="news-content">
-      <div class="news-title">
+      <h2 class="news-title">
         <router-link :to="{ name: 'detail', params: { newsId: newsId} }" class="href-abs"></router-link>
         iPhone X 的12个隐藏细节
+      </h2>
+      <div class="news-info">
+        关于iPhone X 的隐藏细节，你知道多少？文章为你一一解读。 iPhone X 是苹果对 iOS 核心操作的一次重构，第一次 iPhone 有了更高的屏幕，第一次 iPhone 启用人脸识别，...
       </div>
-      <div class="news-info"></div>
       <div class="news-foot">
         <div class="news-author">
           动点科技
@@ -30,48 +33,4 @@
 </script>
 
 <style lang="scss">
-  @import "../assets/sass/scss/extend";
-.news-item{
-  padding: 0.5rem;
-  border-bottom:1px solid #eee;
-  .news-media{
-    position: relative;
-    display: inline-block;
-    float: left;
-    width:10.75rem;
-    overflow: hidden;
-    @extend %boxSize;
-    .top-padding{
-      padding-top:65%;
-    }
-    .img-box{
-      position: absolute;
-      top:0;
-      bottom:0;
-      left:0;
-      right:0;
-      display: block;
-      img{
-        display: block;
-        position: absolute;
-        top:0;
-        left:0;
-        right:0;
-        bottom:0;
-        max-width:100%;
-        max-height:100%;
-      }
-    }
-  }
-  .news-content{
-    display: inline-block;
-    padding-left:1rem;
-    .news-title{
-      position: relative;
-      font-size:0.9rem;
-      margin-bottom:0.75rem;
-      font-weight: bold;
-    }
-  }
-}
 </style>

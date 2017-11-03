@@ -1,7 +1,10 @@
 <template>
   <div id="app">
-    <el-container class="header-style">
-      <v-header></v-header>
+    <el-container>
+      <div class="header-style">
+        <v-header></v-header>
+      </div>
+
       <router-view/>
       <el-footer>Footer</el-footer>
     </el-container>

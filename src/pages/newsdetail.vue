@@ -1,6 +1,6 @@
 <template>
   <div id="news">
-    <div>{{newsId}}</div>
+    <div>{{$route.params.newsId}}</div>
   </div>
 </template>
 <script type="text/ecmascript-6">

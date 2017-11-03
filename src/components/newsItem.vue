@@ -8,7 +8,7 @@
     </div>
     <div class="news-content">
       <div class="news-title">
-        <a class="href-abs" :href="'/newsdetail/'+newsId+'/'"></a>
+        <router-link :to="{ name: 'detail', params: { newsId: newsId} }" class="href-abs"></router-link>
         iPhone X 的12个隐藏细节
       </div>
       <div class="news-info"></div>

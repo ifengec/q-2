@@ -8,10 +8,12 @@ export default new Router({
   routes: [
     {
       path: '/',
+      name: 'index',
       component: Index
     },
     {
       path: '/newsdetail/:newsId/',
+      name: 'detail',
       component: newsDetail
     }
   ]

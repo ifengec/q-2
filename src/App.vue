@@ -2,29 +2,14 @@
   <div id="app">
     <el-container class="header-style">
       <v-header></v-header>
+      <router-view/>
+      <el-footer>Footer</el-footer>
     </el-container>
-    <el-main>
-      <div class="container">
-        <el-row :gutter="20">
-          <el-col :span="18" class="main-index">
-            <v-carousel></v-carousel>
-            <v-cats></v-cats>
-          </el-col>
-          <el-col :span="6">
-
-          </el-col>
-        </el-row>
-      </div>
-    </el-main>
-    <el-footer>Footer</el-footer>
-    <el-button @click="startHacking">Start</el-button>
   </div>
 </template>
 
 <script>
 import header from 'components/header/header.vue'
-import carousel from 'components/carousel.vue'
-import cats from 'components/cats.vue'
 export default {
   name: 'app',
   methods: {
@@ -38,9 +23,7 @@ export default {
     }
   },
   components: {
-    'vHeader': header,
-    'vCarousel': carousel,
-    'vCats': cats
+    'vHeader': header
   }
 }
 </script>

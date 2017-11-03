@@ -28,3 +28,6 @@ header,ul,.el-row{
     outline:none
   }
 }
+.href-abs{
+  @extend %absolute
+}

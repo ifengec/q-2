@@ -8,7 +8,7 @@
     </div>
     <div class="news-content">
       <div class="news-title">
-        <a class="href-abs" href="/newsdetail/0"></a>
+        <a class="href-abs" :href="'/newsdetail/'+newsId+'/'"></a>
         iPhone X 的12个隐藏细节
       </div>
       <div class="news-info"></div>
@@ -24,7 +24,9 @@
   </div>
 </template>
 <script type="text/ecmascript-6">
-  export default {}
+  export default {
+    props: ['newsId']
+  }
 </script>
 
 <style lang="scss">

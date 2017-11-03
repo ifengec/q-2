@@ -1,0 +1,22 @@
+<template>
+  <el-carousel indicator-position="outside">
+    <el-carousel-item v-for="item in 4" :key="item">
+      <h3>{{ item }}</h3>
+    </el-carousel-item>
+  </el-carousel>
+</template>
+<script type="text/ecmascript-6">
+    export default {}
+</script>
+<style lang="scss">
+  .el-carousel__item h3 {
+    color: #475669;
+    font-size: 18px;
+    opacity: 0.75;
+    line-height: 300px;
+    margin: 0;
+  }
+  .el-carousel__item {
+    background-color: #dee7f2;
+  }
+</style>

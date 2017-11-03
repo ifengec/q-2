@@ -1,0 +1,30 @@
+html::-webkit-scrollbar{width:0}
+html{
+  font-size: $font-html-size;
+  -webkit-text-size-adjust:100%;
+}
+body{
+  font-family:$font-family-sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 0.6rem;
+  min-width:$container-width;
+}
+.container{
+  width: $container-width;
+  margin:0 auto;
+}
+:after, :before {
+  @extend %boxSize
+}
+.clearfix:after, .clearfix:before {
+  content: " ";
+  display: table;
+}
+.clearfix:after {
+  clear: both;
+}
+header,ul,.el-row{
+  &:focus{
+    outline:none
+  }
+}

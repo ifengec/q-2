@@ -29,7 +29,9 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {
+      '/': path.resolve(__dirname, '../'),
       'src': path.resolve(__dirname, '../src'),
+      'components': path.resolve(__dirname, '../src/components'),
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
     }
@@ -83,13 +85,13 @@ module.exports = {
         test: /\.scss$/,
         use: extractSass.extract({
           use: [{
-            loader: "css-loader",options:{
+            loader: "css-loader", options:{
               sourceMap:true
             }
           }, {
-            loader: "sass-loader",options:{
+            loader: "sass-loader", options:{
               sourceMap:true
-          }],
+          }}],
           // use style-loader in development
           fallback: "style-loader"
         })

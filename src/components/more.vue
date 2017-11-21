@@ -1,14 +1,11 @@
 <template>
   <div id="more">
-    <el-button type="primary" round v-if="done" @click="loadMore">加载更多</el-button>
-    <div class="el-loading" v-if="loading">
-      <div class="el-loading-spinner"><i class="el-icon-loading"></i><p class="el-loading-text">拼命加载中</p></div>
-    </div>
+    <el-button type="primary" round v-if="!loading" @click="addNewsItem">加载更多</el-button>
   </div>
 </template>
 <script type="text/ecmascript-6">
   export default {
-    props: ['done', 'loading', 'activeName'],
+    props: ['done', 'loading', 'activeName', 'addNewsItem'],
     methods: {
       loadMore () {
         console.log(this.activeName)

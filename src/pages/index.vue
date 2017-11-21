@@ -4,7 +4,7 @@
       <el-row :gutter="20">
         <el-col :span="18" class="main-index">
           <v-carousel></v-carousel>
-          <v-cats></v-cats>
+          <v-tabs></v-tabs>
         </el-col>
         <el-col :span="6">
 
@@ -15,11 +15,11 @@
 </template>
 <script type="text/ecmascript-6">
   import carousel from 'components/carousel.vue'
-  import cats from 'components/cats.vue'
+  import tabs from 'components/tabsIndex.vue'
   export default {
     components: {
       'vCarousel': carousel,
-      'vCats': cats
+      'vTabs': tabs
     }
   }
 </script>

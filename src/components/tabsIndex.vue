@@ -44,7 +44,7 @@
           third: '',
           fourth: ''
         },
-        loadingI: [] //存放loading 实例
+        loadingI: [] // 存放loading 实例
       }
     },
     created () {

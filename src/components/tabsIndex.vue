@@ -22,7 +22,7 @@
           <v-news v-for="item in tabsData.fourth" :key="item.id" :newsItem="item"></v-news>
         </div>
       </el-tab-pane>
-      <v-more :done="done" :loading="loading" :addNewsItem="addNewsItem"></v-more>
+      <v-more :done="done" :showMore="showMore" :addNewsItem="addNewsItem" :showLoading="showLoading"></v-more>
     </el-tabs>
   </div>
 
@@ -35,19 +35,16 @@
   export default {
     data () {
       return {
-        activeName: 'first',
-        busy: false,
-        show: false,
+        activeName: 'first', // tab 默认选中项
         done: true,
-        loading: false,
-        first: '',
+        showMore: true, // more
         tabsData: {
           first: [],
           second: '',
           third: '',
           fourth: ''
         },
-        loadingT: ''
+        loadingI: [] //存放loading 实例
       }
     },
     created () {
@@ -59,10 +56,13 @@
         let _this = this
         let acName = _this.activeName
         let node = document.querySelector('.' + acName)
+        _this.closeLoading(_this.loadingI)
         if (!node.innerHTML) {
-          _this.getTabsData(_this.activeName)
+          _this.showMore = true
+          _this.getTabsData(acName)
+        } else {
+          _this.showMore = false
         }
-        _this.loading = false
       },
       loadMore () {
         var self = this
@@ -70,16 +70,27 @@
         console.log(this.activeName)
         console.log('loading... ' + new Date())
       },
+      closeLoading (arr) {
+        let _this = this
+        if (arr.length === 0) {
+          return
+        }
+        for (let item of arr) {
+          item.close()
+        }
+        _this.loadingI = []
+      },
       showLoading (activeName) {
+        let _this = this
         let id = '#pane-' + activeName
         let target = document.querySelector(id)
-        console.log(target)
+        // console.log(target)
         let options = {
           fullscreen: true,
           target: target,
           text: '努力加载中...'
         }
-        this.loadingT = Loading.service(options)
+        _this.loadingI.push(Loading.service(options))
       },
       getTabsData (activeName) {
         if (!activeName) {
@@ -87,31 +98,32 @@
         }
         let _this = this
         _this.$http.get(tabsApi).then((resp) => {
-          console.log(activeName + ' get data')
+          // console.log(activeName + ' get data')
           _this.showLoading(activeName)
           setTimeout(function () {
             _this.tabsData[activeName] = resp.body[activeName].slice(0, 10)
-            _this.loadingT.close()
-          }, 3000)
+            _this.closeLoading(_this.loadingI)
+            _this.showMore = false
+          }, 500)
         }, () => {
           console.log('error')
         })
       },
       addNewsItem () {
         let _this = this
-        if (_this.loading) return
-        _this.loading = true
+        if (_this.showMore) return
+        _this.showMore = true
         let acName = _this.activeName
         let node = document.querySelector('.' + acName)
         let selector = '.' + acName + ' .news-item'
         let list = document.querySelectorAll(selector)
         let length = list.length
-        let html = node.innerHTML
+        let html = ''
         if (length > 100) {
-          _this.loading = true
+          _this.showMore = true
           return
         }
-        _this.showLoading()
+        _this.showLoading(acName)
         _this.$http.get(tabsApi).then((resp) => {
           let tabsData = resp.body[acName].slice(0, 10)
           for (let val of tabsData) {
@@ -130,9 +142,11 @@
               '<div class="news-author">' + val.author + '</div>' +
               '<div class="news-time">' + val.addTime + '</div></div></div></div>'
           }
-          _this.appendHTML(node, html)
-          _this.loadingT.close()
-          _this.loading = false
+          setTimeout(function () {
+            _this.appendHTML(node, html)
+            _this.closeLoading(_this.loadingI)
+            _this.showMore = false
+          }, 500)
         }, () => {
           console.log('error')
         })

@@ -22,7 +22,7 @@
           <v-news v-for="item in tabsData.fourth" :key="item.id" :newsItem="item"></v-news>
         </div>
       </el-tab-pane>
-      <v-more :done="done" :showMore="showMore" :addNewsItem="addNewsItem" :showLoading="showLoading"></v-more>
+      <v-more :done="done" :showMore="showMore" :addNewsItem="addNewsItem"></v-more>
     </el-tabs>
   </div>
 
@@ -40,16 +40,16 @@
         showMore: true, // more
         tabsData: {
           first: [],
-          second: '',
-          third: '',
-          fourth: ''
+          second: [],
+          third: [],
+          fourth: []
         },
         loadingI: [] // 存放loading 实例
       }
     },
     created () {
       let _this = this
-      _this.getTabsData()
+      _this.setTabsData()
     },
     methods: {
       handleClick (tab, event) {
@@ -59,7 +59,7 @@
         _this.closeLoading(_this.loadingI)
         if (!node.innerHTML) {
           _this.showMore = true
-          _this.getTabsData(acName)
+          _this.setTabsData(acName)
         } else {
           _this.showMore = false
         }
@@ -80,9 +80,9 @@
         }
         _this.loadingI = []
       },
-      showLoading (activeName) {
+      showLoading (acName) {
         let _this = this
-        let id = '#pane-' + activeName
+        let id = '#pane-' + acName
         let target = document.querySelector(id)
         // console.log(target)
         let options = {
@@ -92,16 +92,17 @@
         }
         _this.loadingI.push(Loading.service(options))
       },
-      getTabsData (activeName) {
-        if (!activeName) {
-          activeName = 'first'
-        }
+      setTabsData (acName) {
         let _this = this
+        if (!acName) {
+          acName = 'first'
+        }
         _this.$http.get(tabsApi).then((resp) => {
+          _this.showLoading(acName)
           // console.log(activeName + ' get data')
-          _this.showLoading(activeName)
+          let tabsData = resp.body[acName].slice(0, 10)
           setTimeout(function () {
-            _this.tabsData[activeName] = resp.body[activeName].slice(0, 10)
+            _this.tabsData[acName].push.apply(_this.tabsData[acName], tabsData)
             _this.closeLoading(_this.loadingI)
             _this.showMore = false
           }, 500)
@@ -114,55 +115,12 @@
         if (_this.showMore) return
         _this.showMore = true
         let acName = _this.activeName
-        let node = document.querySelector('.' + acName)
-        let selector = '.' + acName + ' .news-item'
-        let list = document.querySelectorAll(selector)
-        let length = list.length
-        let html = ''
+        let length = _this.tabsData[acName].length
         if (length > 100) {
           _this.showMore = true
           return
         }
-        _this.showLoading(acName)
-        _this.$http.get(tabsApi).then((resp) => {
-          let tabsData = resp.body[acName].slice(0, 10)
-          for (let val of tabsData) {
-            html += '<div class="news-item clearfix">' +
-              '<div class="news-media">' +
-              '<a href="/detail/' + val.id + '/" class="href-abs"></a>' +
-              '<div class="top-padding"></div>' +
-              '<div class="img-box">' +
-              '<img src="' + val.img + '">' +
-              '</div></div>' +
-              '<div class="news-content">' +
-              '<h2 class="news-title">' +
-              '<a href="/detail/' + val.id + '/" class="href-abs"></a>' + val.title + '</h2>' +
-              '<div class="news-info">' + val.info + '</div>' +
-              '<div class="news-foot">' +
-              '<div class="news-author">' + val.author + '</div>' +
-              '<div class="news-time">' + val.addTime + '</div></div></div></div>'
-          }
-          setTimeout(function () {
-            _this.appendHTML(node, html)
-            _this.closeLoading(_this.loadingI)
-            _this.showMore = false
-          }, 500)
-        }, () => {
-          console.log('error')
-        })
-      },
-      appendHTML (el, html) {
-        let divTemp = document.createElement('div')
-        let nodes = null
-        let fragment = document.createDocumentFragment()
-        divTemp.innerHTML = html
-        nodes = divTemp.childNodes
-        for (var i = 0, length = nodes.length; i < length; i += 1) {
-          fragment.appendChild(nodes[i].cloneNode(true))
-        }
-        el.appendChild(fragment)
-        nodes = null
-        fragment = null
+        _this.setTabsData(acName)
       }
     },
     components: {

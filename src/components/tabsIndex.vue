@@ -42,14 +42,14 @@
           third: [],
           fourth: []
         },
-        tabsShowLoading: {
+        tabsShowLoading: { // tabs切换,进入新的tab时是否显示loading实例
           first: true,
           second: true,
           third: true,
           fourth: true
         },
         loadingI: [], // 存放loading 实例
-        isloading: false,
+        isloading: false, // 加载标志
         loadBtn: {
           txt: '加载更多',
           txt1: '加载更多',
@@ -65,21 +65,16 @@
       handleClick (tab, event) {
         let _this = this
         let acName = _this.activeName
-        let node = document.querySelector('.' + acName)
         _this.closeLoading(_this.loadingI)
-        if (!node.innerHTML) {
-          _this.showMoreBtn = false
+        _this.showMoreBtn = !_this.tabsShowLoading[acName]
+        if (_this.tabsShowLoading[acName]) {
           _this.setTabsData(acName)
-        } else {
-          _this.showMoreBtn = true
         }
       },
-      loadMore () {
-        var self = this
-        self.show = true
-        console.log(this.activeName)
-        console.log('loading... ' + new Date())
-      },
+      /**
+       *关闭loading实例
+       * @param arr 保存实例的数组
+       */
       closeLoading (arr) {
         let _this = this
         if (arr.length === 0) {
@@ -90,6 +85,10 @@
         }
         _this.loadingI = []
       },
+      /**
+       *
+       * @param acName tab项的name
+       */
       showLoading (acName) {
         let _this = this
         let id = '#pane-' + acName
@@ -102,6 +101,11 @@
         }
         _this.loadingI.push(Loading.service(options))
       },
+      /**
+       *
+       * @param acName tab项的name 与resp数据的json项名对应
+       * @param length 数据的长度
+       */
       setTabsData (acName, length) {
         let _this = this
         if (!acName) {

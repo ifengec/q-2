@@ -22,10 +22,9 @@
           <v-news v-for="item in tabsData.fourth" :key="item.id" :newsItem="item"></v-news>
         </div>
       </el-tab-pane>
-      <v-more :done="done" :showMore="showMore" :addNewsItem="addNewsItem"></v-more>
+      <v-more :showMoreBtn="showMoreBtn" :addNewsItem="addNewsItem" :btnTxt="loadBtn.txt"></v-more>
     </el-tabs>
   </div>
-
 </template>
 <script type="text/ecmascript-6">
   import newsItem from 'components/newsItem.vue'
@@ -36,15 +35,26 @@
     data () {
       return {
         activeName: 'first', // tab 默认选中项
-        done: true,
-        showMore: true, // more
+        showMoreBtn: false, // more
         tabsData: {
           first: [],
           second: [],
           third: [],
           fourth: []
         },
-        loadingI: [] // 存放loading 实例
+        tabsShowLoading: {
+          first: true,
+          second: true,
+          third: true,
+          fourth: true
+        },
+        loadingI: [], // 存放loading 实例
+        isloading: false,
+        loadBtn: {
+          txt: '加载更多',
+          txt1: '加载更多',
+          txt2: '加载中...'
+        }
       }
     },
     created () {
@@ -58,10 +68,10 @@
         let node = document.querySelector('.' + acName)
         _this.closeLoading(_this.loadingI)
         if (!node.innerHTML) {
-          _this.showMore = true
+          _this.showMoreBtn = false
           _this.setTabsData(acName)
         } else {
-          _this.showMore = false
+          _this.showMoreBtn = true
         }
       },
       loadMore () {
@@ -92,19 +102,27 @@
         }
         _this.loadingI.push(Loading.service(options))
       },
-      setTabsData (acName) {
+      setTabsData (acName, length) {
         let _this = this
         if (!acName) {
           acName = 'first'
         }
-        _this.$http.get(tabsApi).then((resp) => {
-          _this.showLoading(acName)
+        if (!length) {
+          length = 0
+        }
+        _this.$http.get(tabsApi, {params: {'step': 10, 'length': length}}).then((resp) => {
+          if (_this.tabsShowLoading[acName]) {
+            _this.showLoading(acName)
+            _this.tabsShowLoading[acName] = false
+          }
           // console.log(activeName + ' get data')
           let tabsData = resp.body[acName].slice(0, 10)
           setTimeout(function () {
             _this.tabsData[acName].push.apply(_this.tabsData[acName], tabsData)
             _this.closeLoading(_this.loadingI)
-            _this.showMore = false
+            _this.isloading = false
+            _this.showMoreBtn = true
+            _this.loadBtn.txt = _this.loadBtn.txt1
           }, 500)
         }, () => {
           console.log('error')
@@ -112,15 +130,16 @@
       },
       addNewsItem () {
         let _this = this
-        if (_this.showMore) return
-        _this.showMore = true
+        if (_this.isloading) return
+        _this.isloading = true
+        _this.loadBtn.txt = _this.loadBtn.txt2
         let acName = _this.activeName
         let length = _this.tabsData[acName].length
         if (length > 100) {
-          _this.showMore = true
+          _this.showMoreBtn = false
           return
         }
-        _this.setTabsData(acName)
+        _this.setTabsData(acName, length)
       }
     },
     components: {

@@ -1,11 +1,11 @@
 <template>
   <div id="more">
-    <el-button type="primary" round v-if="!showMore" @click="addNewsItem">加载更多</el-button>
+    <el-button type="primary" round v-if="showMoreBtn" @click="addNewsItem">{{btnTxt}}</el-button>
   </div>
 </template>
 <script type="text/ecmascript-6">
   export default {
-    props: ['done', 'showMore', 'activeName', 'addNewsItem']
+    props: ['showMoreBtn', 'addNewsItem', 'btnTxt']
   }
 </script>
 

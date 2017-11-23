@@ -28,14 +28,12 @@
 </template>
 <script type="text/ecmascript-6">
   export default {
-    props: ['newsItem'],
-    created () {
-    }
+    props: ['newsItem']
   }
 </script>
 
 <style lang="scss">
-  .news-item {
+  .news-media {
     .img-box {
       img {
         -webkit-transition: all 0.35s;

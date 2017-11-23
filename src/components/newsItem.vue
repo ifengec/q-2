@@ -35,4 +35,28 @@
 </script>
 
 <style lang="scss">
+  .news-item {
+    .img-box {
+      img {
+        -webkit-transition: all 0.35s;
+        -moz-transition: all 0.35s;
+        -ms-transition: all 0.35s;
+        -o-transition: all 0.35s;
+        transition: all 0.35s;
+      }
+    }
+    &:hover {
+      .img-box {
+        img {
+          -webkit-transform: scale(1.2, 1.2);
+          -moz-transform: scale(1.2, 1.2);
+          -ms-transform: scale(1.2, 1.2);
+          -o-transform: scale(1.2, 1.2);
+          transform: scale(1.2, 1.2);
+        }
+      }
+    }
+  }
+
+
 </style>

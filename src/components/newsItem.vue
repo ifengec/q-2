@@ -10,7 +10,7 @@
     <div class="news-content">
       <h2 class="news-title">
         <router-link :to="{ name: 'detail', params: { newsId: newsItem.id} }" class="href-abs"></router-link>
-        {{newsItem.title}}
+        {{newsItem.id}} {{newsItem.title}}
       </h2>
       <div class="news-info">
         {{newsItem.info}}

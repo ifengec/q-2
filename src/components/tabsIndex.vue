@@ -36,6 +36,8 @@
       return {
         activeName: 'first', // tab 默认选中项
         showMoreBtn: false, // more
+        aStep: 10,
+        max: 49,
         tabsData: {
           first: [],
           second: [],
@@ -114,13 +116,13 @@
         if (!length) {
           length = 0
         }
-        _this.$http.get(tabsApi, {params: {'step': 10, 'length': length}}).then((resp) => {
+        _this.$http.get(tabsApi, {params: {'step': _this.aStep, 'length': length}}).then((resp) => {
           if (_this.tabsShowLoading[acName]) {
             _this.showLoading(acName)
             _this.tabsShowLoading[acName] = false
           }
           // console.log(activeName + ' get data')
-          let tabsData = resp.body[acName].slice(0, 10)
+          let tabsData = resp.body[acName].slice(length, length + _this.aStep)
           setTimeout(function () {
             _this.tabsData[acName].push.apply(_this.tabsData[acName], tabsData)
             _this.closeLoading(_this.loadingI)
@@ -139,7 +141,7 @@
         _this.loadBtn.txt = _this.loadBtn.txt2
         let acName = _this.activeName
         let length = _this.tabsData[acName].length
-        if (length > 100) {
+        if (length > _this.max) {
           _this.showMoreBtn = false
           return
         }

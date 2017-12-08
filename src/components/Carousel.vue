@@ -22,7 +22,7 @@
       _this.setImg()
     },
     methods: {
-      setImg () {
+      setImg () { // carousel 数据
         let _this = this
         _this.$http.get(api, {params: {'num': 10}}).then((resp) => {
           _this.imgData = resp.body['data']

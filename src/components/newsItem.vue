@@ -33,14 +33,19 @@
 </script>
 
 <style lang="scss">
+  @import "../../src/assets/sass/scss/extend";
   .news-media {
+    overflow: hidden;
+    @extend %translateY0;
     .img-box {
+      @extend %translateY0;
       img {
         -webkit-transition: all 0.35s;
         -moz-transition: all 0.35s;
         -ms-transition: all 0.35s;
         -o-transition: all 0.35s;
         transition: all 0.35s;
+        @extend %translateY0;
       }
     }
     &:hover {

@@ -1,6 +1,6 @@
-# qdefense2.0
+# q2.0
 
-> qdefense 2.0
+> q 2.0
 
 ## Build Setup
 

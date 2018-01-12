@@ -1,7 +1,13 @@
 {
+<<<<<<< HEAD
   "name": "q2.0",
   "version": "1.0.0",
   "description": "q2.0",
+=======
+  "name": "q 2.0",
+  "version": "1.0.0",
+  "description": "q 2.0",
+>>>>>>> d6f966dbca3c7c68b5f43eff0b0daada610bf95b
   "author": "fec",
   "private": true,
   "scripts": {

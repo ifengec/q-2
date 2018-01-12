@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 # qdefense2.0
 
 > qdefense 2.0
+=======
+# q2.0
+
+> q 2.0
+>>>>>>> d6f966dbca3c7c68b5f43eff0b0daada610bf95b
 
 ## Build Setup
 
